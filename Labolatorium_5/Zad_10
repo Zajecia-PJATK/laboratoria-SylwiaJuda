@@ -14,14 +14,25 @@ interface Dwa{
 interface Trzy{
     void trzeci(int g);
 }
+interface Cztery{
+    int czwarty(int a, int b, int c);
+}
 public class Main{
     public static void main(String[] args) {
 
-Jeden a = () -> System.out.println("nie");
-a.pierwszy();
-Dwa b = (double x,double y,double z) -> (int) (x*y-z);
-System.out.println(b.drugi(3,4,6));
-Trzy c = g -> System.out.println(g);
-c.trzeci(1);
+        Jeden a = () -> System.out.println("nie");
+        a.pierwszy();
+        Dwa b = (double x,double y,double z) -> (int) (x*y-z);
+        System.out.println(b.drugi(3,4,6));
+        Trzy c = g -> System.out.println(g);
+        c.trzeci(1);
+        Cztery d = (int f,int s, int t) -> {
+                int r = f - s;
+                int u = s - t;
+                int k = t - f;
+                int sum= r+u+k;
+                return sum;
+        };
+        System.out.println(d.czwarty(3,6,9));
     }
 }
