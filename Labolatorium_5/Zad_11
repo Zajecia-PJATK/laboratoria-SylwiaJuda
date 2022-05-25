@@ -1,0 +1,47 @@
+package com.company;
+
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+class Ichi implements Comparable<Ichi>{
+int liczba;
+    @Override
+    public int compareTo(Ichi y) {
+        if(liczba>y.liczba){
+            return 1;
+        }
+        if(liczba==y.liczba) {
+            return 0;
+        }
+
+            return -1;
+
+    }
+
+    public int getLiczba() {
+        return liczba;
+    }
+
+    public void setLiczba(int liczba) {
+        this.liczba = liczba;
+    }
+
+    public Ichi(int liczba) {
+        this.liczba = liczba;
+    }
+}
+public class Main{
+    public static void main(String[] args) {
+        Ichi a = new Ichi(10);
+        Ichi b = new Ichi(1);
+        Ichi c = new Ichi(20);
+        Ichi d = new Ichi(10);
+        System.out.println(a.compareTo(b));
+        System.out.println(a.compareTo(c));
+        System.out.println(a.compareTo(d));
+
+    }
+}
