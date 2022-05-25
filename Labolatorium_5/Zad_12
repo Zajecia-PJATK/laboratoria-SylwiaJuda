@@ -1,0 +1,71 @@
+package com.company;
+
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Scanner;
+
+interface Jeden {
+    void pierwszy();
+    void drugi(); 
+}
+interface Dwa{
+    int tzreci(int a, int b);
+    int czwarty(int c, int d);
+}
+interface Trzy extends Jeden, Dwa{
+    int piec(int e);
+}
+class Ichi {
+    int need;
+}
+class Ni extends Ichi implements Trzy{
+
+    @Override
+    public void pierwszy() {
+System.out.println("Metoda pierwszy z interface Jeden");
+    }
+
+    @Override
+    public void drugi() {
+        System.out.println("Metoda drugi z interface Jeden");
+    }
+
+
+    @Override
+    public int tzreci(int a, int b) {
+        return 3;
+    }
+
+    @Override
+    public int czwarty(int c, int d) {
+        return 4;
+    }
+
+
+    @Override
+    public int piec(int e) {
+        return 5;
+    }
+
+}
+public class Main{
+    static void dojeden(Jeden zmienna1){
+zmienna1.pierwszy();
+zmienna1.drugi();
+    }
+    static void dodwa(Dwa zmienna2){
+        System.out.println(zmienna2.tzreci(3,3));
+        System.out.println(zmienna2.czwarty(4,4));
+    }
+    static void dotrzy(Trzy zmienna3){
+        System.out.println(zmienna3.piec(5));
+    }
+    public static void main(String[] args) {
+Ni obiekt1 = new Ni ();
+dojeden(obiekt1);
+dodwa(obiekt1);
+dotrzy(obiekt1);
+
+    }
+}
