@@ -1,0 +1,118 @@
+package com.company;
+
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Scanner;
+class GradedActivity {
+    private double score; // Wynik punktowy.
+
+    public void setScore(double s)
+    {
+        score = s;
+    }
+
+    public double getScore()
+    {
+        return score;
+    }
+
+    public char getGrade(){
+        char letterGrade;
+        if (score >= 90)
+            letterGrade = '5';
+        else if (score >= 80)
+            letterGrade = '4';
+        else if (score >= 70)
+            letterGrade = '3';
+        else if (score >= 60)
+            letterGrade = '2';
+        else
+            letterGrade = '1';
+        return letterGrade;
+    }
+}
+interface Analyzable{
+    double getAverage();
+    GradedActivity getHighest();
+    GradedActivity getLowest();
+}
+class CourseGrades implements Analyzable{
+    private GradedActivity grades[];
+
+    @Override
+    public double getAverage() {
+        double average=0;
+        int sum=0;
+        for (int i=0; i<= grades.length-1;i++){
+            sum += grades[i].getScore();
+        }
+        average=sum/(grades.length);
+        return average;
+    }
+
+    @Override
+    public GradedActivity getHighest() {
+        double max=0;
+        int h=0;
+        for(int i=0; i<= grades.length-1;i++){
+            if(grades[i].getScore()>max){
+                max=grades[i].getScore();
+                h=i;
+            }
+        }
+        return grades[h];
+    }
+
+    @Override
+    public GradedActivity getLowest() {
+        double low=grades[0].getScore();
+        int l=0;
+        for(int i=1; i<= grades.length-1;i++){
+            if(grades[i].getScore()<low){
+                low=grades[i].getScore();
+                l=i;
+            }
+        }
+        return grades[l];
+    }
+
+    public GradedActivity[] getGrades() {
+        return grades;
+    }
+
+    public void setGrades(GradedActivity[] grades) {
+        this.grades = grades;
+    }
+
+    public CourseGrades(GradedActivity[] grades) {
+        this.grades = grades;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseGrades{" +
+                "grades=" + Arrays.toString(grades) +
+                '}';
+    }
+}
+class Main{
+    public static void main(String[] args) {
+        GradedActivity a = new GradedActivity();
+        GradedActivity b = new GradedActivity();
+        GradedActivity c = new GradedActivity();
+        GradedActivity d = new GradedActivity();
+        a.setScore(1);
+        b.setScore(48);
+        c.setScore(55);
+        d.setScore(73);
+
+        CourseGrades c1 = new CourseGrades(new GradedActivity[]{a,b,c,d});
+
+
+
+        System.out.println(c1.getAverage());
+        System.out.println(c1.getLowest().getScore());
+        System.out.println(c1.getHighest().getScore());
+    }
+}
