@@ -1,0 +1,31 @@
+package com.company;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Integer> zly = new ArrayList<>(Arrays.asList(-99, 999, 9, 99));
+        ArrayList<Integer> dobry = new ArrayList<>(Arrays.asList(89, 9, 99, 59));
+
+        try {
+            TestScores zlytest = new TestScores(zly);
+            TestScores dobrytest = new TestScores(dobry);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+class TestScores {
+    public TestScores(ArrayList<Integer> punkty) throws IllegalArgumentException {
+        for (int punkt : punkty) {
+            if (punkt < 0 || punkt > 100) throw new IllegalArgumentException("ERROR! Przedzial punktow ma byc 0-100");
+        }
+    }
+}
