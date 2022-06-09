@@ -1,0 +1,36 @@
+package com.company;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<String> names = new ArrayList<>(Arrays.asList("Leo", "Klementyna","Roland", "Tomisław"));
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int name = scanner.nextInt();
+            System.out.println(findValue(names, name));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            int name = scanner.nextInt();
+            System.out.println(findValue(names, name));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static int findValue(ArrayList<String> names, int name) throws Exception {
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i) == name) {
+                return i;
+            }
+        }
+
+        throw new Exception("Nie ma imienia z takim numerem");
+    }
+}
