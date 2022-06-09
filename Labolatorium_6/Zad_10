@@ -1,24 +1,26 @@
 package com.company;
 
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
-
-public class Main{
+public class Main {
 
     public static void main(String[] args) {
-        wypisz(9);
-        wypisz(-9);
+        try {
+            wypisz(5);
+            wypisz(-1);
+        } catch ( IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+        }
 
     }
 
     public static void wypisz(int numb) throws IllegalArgumentException{
         if (numb < 0) throw new IllegalArgumentException("Argument nie może być wartością ujemną.");
         for (int i = numb; i >= 0; i--){
-             System.out.print("#");
+            System.out.print("#");
 
         }
     }
