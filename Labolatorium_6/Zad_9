@@ -1,31 +1,20 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+         import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
-        ArrayList<Integer> namb = new ArrayList<>(Arrays.asList(9, 99,999, 9999));
-        Scanner scanner = new Scanner(System.in);
-        try {
-            int nam = scanner.nextInt();
-            System.out.println(findValue(namb, nam));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+ class Main {
+     public static void main(String[] args) {
 
-        try {
-            int nam = scanner.nextInt();
-            System.out.println(findValue(namb, nam));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+         int[] numb = {9,99,999};
+         int index = 3;
 
-    public static int findValue(ArrayList<Integer> namb, int nam) throws Exception {
-        for (int i = 0; i < namb.size(); i++) {
-            if (namb.get(i) == nam) {
-                return i;
-            }
-        }
+         try {
+                 System.out.print("Twoja liczba to: " + numb[index]);
 
-        throw new Exception("Elementu nie znaleziono.");
+         }
+         catch (Exception e) {
+             System.out.print("Elementu nie znaleziono.");
+         }
+     }
+ }
+
+
