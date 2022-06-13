@@ -1,0 +1,299 @@
+package com.company;
+import java.io.File;
+import java.io.IOException;
+import java.awt.event.*;
+import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.*;
+
+public class Quiz implements ActionListener {
+    JFrame window;
+    JPanel textPanel;
+    JLabel textLabel;
+    public Font specialElite;
+
+
+
+
+
+
+
+    String[] questions =    {
+                                "Jak na nazwisko miał Kaz?",
+                                "Po kim Inej nazywała noże?",
+                                "Kto był najwiekszym wrogiem Kaz'a?",
+                                "Skąd pochodził Matthias?",
+                                "Czym jest jurda parem?",
+                                "Czyim synem był Kuwei?"
+                            };
+    String[][] options =    {
+                                {"Bekker","Brigeton","Barker"},
+                                {"Po członkach rodziny","Po świętych","Po swoich ofiarach"},
+                                {"Pekka Rolins","Jasper","Van Eck"},
+                                {"Wrot piekieł","Ravki","Lodowego dworu"},
+                                {"Rośliną","Narkotykiem","Przyprawą"},
+                                {"Van Eck'a","Pekka Rolins'a","Bekker'a"}
+                            };
+    char[] answers =    {
+
+            'A',
+            'B',
+            'A',
+            'C',
+            'B',
+            'A'
+                        };
+    char guess;
+    char answer;
+    int index;
+    int correct_guesses =0;
+    int total_questions = questions.length;
+    int result;
+    int seconds=15;
+
+    JFrame frame = new JFrame();
+    JTextField textfiled = new JTextField();
+    JTextArea textarea = new JTextArea();
+    JButton buttonA = new JButton();
+    JButton buttonB = new JButton();
+    JButton buttonC = new JButton();
+    JLabel answer_labelA = new JLabel();
+    JLabel answer_labelB = new JLabel();
+    JLabel answer_labelC = new JLabel();
+    JLabel time_label = new JLabel();
+    JLabel time_left = new JLabel();
+    JTextField numer_right = new JTextField();
+    JTextField score = new JTextField();
+
+    Timer timer = new Timer(1000, new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e){
+            seconds--;
+            time_left.setText(String.valueOf(seconds));
+            if(seconds<=0){
+                displayAnswer();
+            }
+        }
+    });
+    public Quiz(){
+        try{
+            specialElite = Font.createFont(Font.TRUETYPE_FONT, new File("SpecialElite-Regular.ttf")).deriveFont(30f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("SpecialElite-Regular.ttf")));
+        }
+        catch(IOException | FontFormatException e){
+
+        }
+        ImageIcon logo = new ImageIcon(".//res//crow.jpg");
+
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600,600);
+        frame.getContentPane().setBackground(new Color(205, 186, 158));
+        frame.setLayout(null);
+        frame.setResizable(false);
+        frame.setIconImage(logo.getImage());
+
+
+        textfiled.setBounds(0,0,600,80);
+        textfiled.setBackground(new Color(205, 186, 158));
+        textfiled.setForeground(new Color(17, 8, 3));
+        textfiled.setFont(specialElite);
+        textfiled.setBorder(BorderFactory.createBevelBorder(2));
+        textfiled.setHorizontalAlignment(JTextField.CENTER);
+        textfiled.setEditable(false);
+
+
+        textarea.setBounds(0,80,600,50);
+        textarea.setLineWrap(true);
+        textarea.setWrapStyleWord(true);
+        textarea.setBackground(new Color(205, 186, 158));
+        textarea.setForeground(new Color(17, 8, 3));
+        textarea.setFont(specialElite);
+        textarea.setEditable(false);
+
+
+        buttonA.setBounds(30,220,50,50);
+        buttonA.setFocusable(false);
+        buttonA.addActionListener(this);
+        buttonA.setBackground(Color.black);
+        buttonA.setBorder(BorderFactory.createBevelBorder(2));
+
+
+        buttonB.setBounds(30,320,50,50);
+        buttonB.setFocusable(false);
+        buttonB.addActionListener(this);
+        buttonB.setBackground(Color.black);
+        buttonB.setBorder(BorderFactory.createBevelBorder(2));
+
+        buttonC.setBounds(30,420,50,60);
+        buttonC.setFocusable(false);
+        buttonC.addActionListener(this);
+        buttonC.setBackground(Color.black);
+        buttonC.setBorder(BorderFactory.createBevelBorder(2));
+
+
+        answer_labelA.setBounds(125,200,500,100);
+        answer_labelA.setBackground(new Color(205, 186, 158));
+        answer_labelA.setForeground(new Color(17, 8, 3));
+        answer_labelA.setFont(specialElite);
+
+        answer_labelB.setBounds(125,300,500,100);
+        answer_labelB.setBackground(new Color(205, 186, 158));
+        answer_labelB.setForeground(new Color(17, 8, 3));
+        answer_labelB.setFont(specialElite);
+
+        answer_labelC.setBounds(125,400,500,100);
+        answer_labelC.setBackground(new Color(205, 186, 158));
+        answer_labelC.setForeground(new Color(17, 8, 3));
+        answer_labelC.setFont(specialElite);
+
+        time_left.setBounds(535,512,50,50);
+        time_left.setBackground(new Color(205, 186, 158));
+        time_left.setForeground(new Color(17, 8, 3));
+        time_left.setFont(specialElite);
+        time_left.setBorder(BorderFactory.createBevelBorder(2));
+        time_left.setOpaque(true);
+        time_left.setHorizontalAlignment(JTextField.CENTER);
+        time_left.setText(String.valueOf(seconds));
+
+        numer_right.setBounds(225,225,200,100);
+        numer_right.setBackground(new Color(205, 186, 158));
+        numer_right.setForeground(new Color(17, 8, 3));
+        numer_right.setFont(specialElite);
+        numer_right.setBorder(BorderFactory.createBevelBorder(2));
+        numer_right.setHorizontalAlignment(JTextField.CENTER);
+        numer_right.setEditable(false);
+
+        score.setBounds(225,325,200,100);
+        score.setBackground(new Color(205, 186, 158));
+        score.setForeground(new Color(17, 8, 3));
+        score.setFont(specialElite);
+        score.setBorder(BorderFactory.createBevelBorder(2));
+        score.setHorizontalAlignment(JTextField.CENTER);
+        score.setEditable(false);
+
+        frame.add(time_label);
+        frame.add(time_left);
+        frame.add(answer_labelA);
+        frame.add(answer_labelB);
+        frame.add(answer_labelC);
+        frame.add(buttonA);
+        frame.add(buttonB);
+        frame.add(buttonC);
+        frame.add(textarea);
+        frame.add(textfiled);
+        frame.setVisible(true);
+
+        nextQuestion();
+
+    }
+
+    public void nextQuestion(){
+
+        if(index>=total_questions){
+            results();
+        }
+        else {
+            textfiled.setText("Question"+(index+1));
+            textarea.setText(questions[index]);
+            answer_labelA.setText(options[index][0]);
+            answer_labelB.setText(options[index][1]);
+            answer_labelC.setText(options[index][2]);
+            timer.start();
+
+        }
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        buttonA.setEnabled(false);
+        buttonB.setEnabled(false);
+        buttonC.setEnabled(false);
+
+        if(e.getSource()==buttonA){
+            answer= 'A';
+            if(answer == answers[index]){
+                correct_guesses++;
+            }
+        }
+        if(e.getSource()==buttonB){
+            answer= 'B';
+            if(answer == answers[index]){
+                correct_guesses++;
+            }
+        }
+        if(e.getSource()==buttonC){
+            answer= 'C';
+            if(answer == answers[index]){
+                correct_guesses++;
+            }
+        }
+        displayAnswer();
+    }
+    public void displayAnswer(){
+        timer.stop();
+        buttonA.setEnabled(false);
+        buttonB.setEnabled(false);
+        buttonC.setEnabled(false);
+
+        if(answers[index] != 'A')
+            answer_labelA.setForeground(new Color(148, 29, 29));
+
+        if(answers[index] != 'B')
+            answer_labelB.setForeground(new Color(148, 22, 29));
+
+        if(answers[index] != 'C')
+            answer_labelC.setForeground(new Color(148, 29, 29));
+
+        Timer pause = new Timer(2000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                answer_labelA.setForeground(new Color(17, 8, 3));
+                answer_labelB.setForeground(new Color(17, 8, 3));
+                answer_labelC.setForeground(new Color(17, 8, 3));
+                answer=' ';
+                seconds=20;
+                time_left.setText(String.valueOf(seconds));
+                buttonA.setEnabled((true));
+                buttonB.setEnabled((true));
+                buttonC.setEnabled((true));
+                index++;
+                nextQuestion();
+            }
+        });
+        pause.setRepeats(false);
+        pause.start();
+
+    }
+    public void results(){
+        buttonA.setEnabled(false);
+        buttonB.setEnabled(false);
+        buttonC.setEnabled(false);
+
+        result=(int)((correct_guesses/(double)total_questions)*100);
+
+        textfiled.setText("!Your Resoults!");
+        textarea.setText("");
+        answer_labelA.setText("");
+        answer_labelC.setText("");
+        answer_labelB.setText("");
+        buttonA.setText("");
+        buttonB.setText("");
+        buttonC.setText("");
+
+        numer_right.setText(correct_guesses+"/"+total_questions);
+        score.setText(result+"%");
+
+        frame.add(numer_right);
+        frame.add(score);
+    }
+
+}
